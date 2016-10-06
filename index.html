@@ -65,11 +65,9 @@
     console.log(data);
     /*$(inputTextareaEl).text(data.msg);
     $(textareaEl).val(data.msg);*/
-    editor.setContents({
-      ops: [
-        { insert: data.msg }
-      ]
-    });
+    editor.setContents(
+      { insert: data.msg }
+    );
   });
 
   /*$(textareaEl).on('keyup', function(e){
