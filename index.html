@@ -41,9 +41,15 @@
 
     console.log(editor.getContents().ops[0].insert);
 
-    socket.emit('sendmsg', {
-      msg: editor.getContents().ops[0].insert
-    });
+    if (source === 'api') {
+      console.log("An API call triggered this change.");
+    } else if (source === 'user') {
+      socket.emit('sendmsg', {
+        msg: editor.getContents().ops[0].insert
+      });
+    }
+
+
   });
 
   socket.on('connect', function(){
@@ -59,17 +65,11 @@
     console.log(data);
     /*$(inputTextareaEl).text(data.msg);
     $(textareaEl).val(data.msg);*/
-
-    setTimeout(function(){
-
-      editor.updateContents({
-        ops: [
-          { insert: data.msg }
-        ]
-      });
-
-    },1000)
-
+    editor.updateContents({
+      ops: [
+        { insert: data.msg }
+      ]
+    });
   });
 
   /*$(textareaEl).on('keyup', function(e){
