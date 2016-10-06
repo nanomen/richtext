@@ -3,6 +3,16 @@
     <title>Test socket.io</title>
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+    <!-- Main Quill library -->
+    <script src="//cdn.quilljs.com/1.0.6/quill.min.js" type="text/javascript"></script>
+
+    <!-- Theme included stylesheets -->
+    <link href="//cdn.quilljs.com/1.0.6/quill.snow.css" rel="stylesheet">
+    <link href="//cdn.quilljs.com/1.0.6/quill.bubble.css" rel="stylesheet">
+
+    <!-- Core build with no theme, formatting, non-essential modules -->
+    <link href="//cdn.quilljs.com/1.0.6/quill.core.css" rel="stylesheet">
+    <script src="//cdn.quilljs.com/1.0.6/quill.core.js" type="text/javascript"></script>
 </head>
 <body>
   <div>
@@ -14,6 +24,25 @@
       textareaEl = document.getElementById('textarea'),
       inputTextareaEl = document.getElementById('inputTextarea');
 
+  var options = {
+    debug: 'info',
+    modules: {
+      toolbar: '#toolbar'
+    },
+    placeholder: 'Compose an epic...',
+    //readOnly: true,
+    theme: 'snow'
+  };
+
+  var editor = new Quill('#inputTextarea', options);
+
+  // quill.getContents();
+  editor.on('text-change', function(delta, oldDelta, source) {
+    socket.emit('sendmsg', {
+      msg: delta
+    });
+  });
+
   socket.on('connect', function(){
     console.log('connect');
   });
@@ -23,15 +52,25 @@
   });
 
   socket.on('setmsg', function (data) {
-    $(inputTextareaEl).text(data.msg);
-    $(textareaEl).val(data.msg);
+    /*$(inputTextareaEl).text(data.msg);
+    $(textareaEl).val(data.msg);*/
+    quill.updateContents(data/*{
+      ops: [
+        { retain: 6 },        // Keep 'Hello '
+        { delete: 5 },        // 'World' is deleted
+        { insert: 'Quill' },  // Insert 'Quill'
+        { retain: 1, attributes: { bold: true } }    // Apply bold to exclamation mark
+      ]
+    }*/);
   });
 
-  $(textareaEl).on('keyup', function(e){
+  /*$(textareaEl).on('keyup', function(e){
     socket.emit('sendmsg', {
       msg: $(this).val()
     });
-  });
+  });*/
+
+
 
 </script>
 </body>
