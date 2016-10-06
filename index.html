@@ -39,6 +39,8 @@
   // quill.getContents();
   editor.on('text-change', function(delta, oldDelta, source) {
 
+    onsole.log(editor.getContents().ops[0].insert);
+
     socket.emit('sendmsg', {
       msg: editor.getContents().ops[0].insert
     });
