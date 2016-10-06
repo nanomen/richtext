@@ -1,0 +1,37 @@
+<html>
+<head>
+    <title>Test socket.io</title>
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+</head>
+<body>
+  <div>
+    <textarea id="textarea"></textarea>
+    <div id="inputTextarea"></div>
+  </div>
+<script>
+  var socket = io('https://cryptic-coast-56094.herokuapp.com/'),
+      textareaEl = document.getElementById('textarea'),
+      inputTextareaEl = document.getElementById('inputTextarea');
+
+  socket.on('connect', function(){
+    console.log('connect');
+  });
+
+  socket.on('disconnect', function(){
+    console.log('disconnect');
+  });
+
+  socket.on('setmsg', function (data) {
+    $(inputTextareaEl).text(data.msg);
+  });
+
+  $(textareaEl).on('keyup', function(e){
+    socket.emit('sendmsg', {
+      msg: $(this).val()
+    });
+  });
+
+</script>
+</body>
+</html>
