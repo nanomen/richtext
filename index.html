@@ -36,6 +36,8 @@
 
   var editor = new Quill('#inputTextarea', options);
 
+  console.log(editor);
+
   // quill.getContents();
   editor.on('text-change', function(delta, oldDelta, source) {
 
@@ -65,7 +67,11 @@
     console.log(data);
     /*$(inputTextareaEl).text(data.msg);
     $(textareaEl).val(data.msg);*/
-    editor.setText(data.msg);
+    editor.updateContents({
+      ops: [
+        { insert: data.msg }
+      ]
+    });
   });
 
   /*$(textareaEl).on('keyup', function(e){
