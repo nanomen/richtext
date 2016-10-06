@@ -59,11 +59,17 @@
     console.log(data);
     /*$(inputTextareaEl).text(data.msg);
     $(textareaEl).val(data.msg);*/
-    editor.updateContents({
-      ops: [
-        { insert: data.msg }
-      ]
-    });
+
+    setTimeout(function(){
+
+      editor.updateContents({
+        ops: [
+          { insert: data.msg }
+        ]
+      });
+
+    },1000)
+
   });
 
   /*$(textareaEl).on('keyup', function(e){
