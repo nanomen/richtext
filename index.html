@@ -53,6 +53,8 @@
   });
 
   socket.on('setmsg', function (data) {
+
+    console.log(data);
     /*$(inputTextareaEl).text(data.msg);
     $(textareaEl).val(data.msg);*/
     editor.updateContents({
