@@ -1,8 +1,11 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var extendify = require('extendify');
 
 app.get('/', (req, res) => res.sendFile(__dirname + '/index.html') );
+
+var msgCurrent = null;
 
 // Пдключились
 io.on('connection', (socket) => {
@@ -10,7 +13,20 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => console.log('Client disconnected'));
 
   socket.on('sendmsg', (msg) => {
+
+    var msgArr = msg.split(' '),
+        msgCurrentBuffer = msg.split(' ');
+
+    if (msgCurrent) {
+        msgCurrentBuffer = extendify(msgCurrent, msgArr);
+
+        msg = msgCurrentBuffer.join(' ');
+    }
+
+    msgCurrent = msgCurrentBuffer;
+
     io.emit('setmsg', msg);
+
   });
 
 });

@@ -6,8 +6,8 @@
 </head>
 <body>
   <div>
-    <textarea id="textarea"></textarea>
-    <div id="inputTextarea"></div>
+    <textarea id="textarea" style="width: 500px; height: 500px;"></textarea>
+    <div id="inputTextarea" style="width: 500px; height: 500px;border: 1px solid red;padding: 10px;"></div>
   </div>
 <script>
   var socket = io('https://cryptic-coast-56094.herokuapp.com/'),
@@ -24,6 +24,7 @@
 
   socket.on('setmsg', function (data) {
     $(inputTextareaEl).text(data.msg);
+    $(textareaEl).val(data.msg);
   });
 
   $(textareaEl).on('keyup', function(e){
