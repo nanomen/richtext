@@ -69,6 +69,7 @@
     $(textareaEl).val(data.msg);*/
     editor.updateContents({
       ops: [
+        { retain: 6 },
         { insert: data.msg }
       ]
     });
