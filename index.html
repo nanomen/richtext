@@ -21,12 +21,11 @@
   </div>
 <script>
   var socket = io('https://fast-castle-17277.herokuapp.com/');
-
   var Delta = Quill.import('delta');
   var editor = new Quill('#inputTextarea');
   var change = new Delta();
 
-  console.log(editor);
+  //console.log(editor);
 
 
   // quill.getContents();
@@ -45,6 +44,7 @@
   });
 
   socket.on('setInitData', function(_initText) {
+    console.trace('setchange', _initText);
     editor.setText(_initText);
   });
 
