@@ -45,7 +45,11 @@
 
   socket.on('setInitData', function(_initText) {
     console.trace('setchange', _initText);
-    editor.setText(_initText);
+    quill.updateContents({
+      ops: [
+      { insert: _initText }
+      ]
+    });
   });
 
   socket.on('setchange', function (data) {
