@@ -5,7 +5,7 @@ var extendify = require('extendify');
 
 app.get('/', (req, res) => res.sendFile(__dirname + '/index.html') );
 
-var _initText = '';
+var _initText = 'привет';
 
 // Пдключились
 io.on('connection', (socket) => {
@@ -38,8 +38,8 @@ io.on('connection', (socket) => {
         socket.broadcast.emit('setchange', change);
     });
 
-    socket.on('setInitText', (initText) => {
-        _initText = initText;
+    socket.on('setInitText', (data) => {
+        _initText = data.initText;
     });
 
 });

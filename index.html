@@ -44,8 +44,8 @@
     console.log('disconnect');
   });
 
-  socket.on('setInitData', function(initData) {
-    editor.setText(initData);
+  socket.on('setInitData', function(_initText) {
+    editor.setText(_initText);
   });
 
   socket.on('setchange', function (data) {
@@ -62,6 +62,10 @@
 
         socket.emit('sendchange', {
           change: change
+        });
+
+        socket.emit('setInitText', {
+          initText: editor.getText()
         });
 
         change = new Delta();
