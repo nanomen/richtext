@@ -64,6 +64,7 @@
   });
 
   socket.on('setInitData', function(_initData) {
+
     console.trace('setchange', _initData);
     editor.updateContents(_initData);
     /*editor.updateContents({
@@ -74,7 +75,14 @@
   });
 
   socket.on('setchange', function (data) {
+    var root = document.getElementById('inputTextarea'),
+        pos = 0;
+
+    pos = doGetCaretPosition(root);
+
     editor.updateContents(data.change);
+
+    setCaretPosition(pos);
   });
 
   editor.on('text-change', function(delta, oldDelta, source) {
@@ -125,6 +133,40 @@
       change = new Delta();
     }
   }, 1000);*/
+
+  function setCaretPosition(root, pos) {
+    if(root.setSelectionRange) {
+      root.focus();
+      root.setSelectionRange(pos,pos);
+    } else if (root.createTextRange) {
+      var range = root.createTextRange();
+      range.collapse(true);
+      range.moveEnd('character', pos);
+      range.moveStart('character', pos);
+      range.select();
+    }
+  }
+
+  function doGetCaretPosition (root) {
+
+    var CaretPos = 0;
+    // IE Support
+    if (document.selection) {
+
+      root.focus ();
+      var Sel = document.selection.createRange ();
+
+      Sel.moveStart ('character', -root.value.length);
+
+      CaretPos = Sel.text.length;
+    } else if (root.selectionStart || root.selectionStart == '0') {
+      CaretPos = root.selectionStart;
+    }
+
+    return (CaretPos);
+
+  }
+
 
 </script>
 </body>
