@@ -100,14 +100,16 @@ $(function () {
 
     $.each(data._users, function(index, user){
 
-        console.log(user);
+        if (!!user) {
 
-        var caretPos = user.caretPos;
+            var caretPos = user.caretPos;
 
-        if (!!caretPos && index !== userId) {
+            if (!!caretPos && index !== userId) {
 
-            $("#userCaret_" + index).css('top', user.caretPos.top + 'px');
-            $("#userCaret_" + index).css('left', user.caretPos.left + 'px');
+                $("#userCaret_" + index).css('top', user.caretPos.top + 'px');
+                $("#userCaret_" + index).css('left', user.caretPos.left + 'px');
+
+            }
 
         }
 
