@@ -4,18 +4,14 @@
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
     <!-- Main Quill library -->
-    <script src="https://cdn.quilljs.com/1.0.6/quill.min.js" type="text/javascript"></script>
+    <script src="https://cdn.quilljs.com/1.0.6/quill.js" type="text/javascript"></script>
 
     <!-- Theme included stylesheets -->
     <link href="https://cdn.quilljs.com/1.0.6/quill.snow.css" rel="stylesheet">
     <link href="https://cdn.quilljs.com/1.0.6/quill.bubble.css" rel="stylesheet">
-
-    <!-- Core build with no theme, formatting, non-essential modules -->
-    <link href="https://cdn.quilljs.com/1.0.6/quill.core.css" rel="stylesheet">
-    <script src="https://cdn.quilljs.com/1.0.6/quill.core.js" type="text/javascript"></script>
 </head>
 <body>
-  <div>
+  <div style="width: 500px; height: 500px;">
     <!-- <textarea id="textarea" style="width: 500px; height: 500px;"></textarea> -->
     <div id="toolbar">
       <!-- Add font size dropdown -->
@@ -32,7 +28,7 @@
       <button class="ql-script" value="sub"></button>
       <button class="ql-script" value="super"></button>
     </div>
-    <div id="inputTextarea" style="width: 500px; height: 500px;border: 1px solid red;padding: 10px;"></div>
+    <div id="inputTextarea"></div>
   </div>
 <script>
   var socket = io('https://fast-castle-17277.herokuapp.com/');
@@ -40,10 +36,12 @@
   var Toolbar = Quill.import('modules/toolbar');
 
   Quill.register('modules/toolbar', Toolbar);
+
   var editor = new Quill('#inputTextarea', {
     modules: {
       toolbar: '#toolbar'
-    }
+    },
+    theme: 'snow'
   });
   var change = new Delta();
 
