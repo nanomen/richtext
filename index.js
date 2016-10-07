@@ -30,7 +30,7 @@ io.on('connection', (socket) => {
 
     //socket.on('disconnect', () => console.log('Client disconnected'));
 
-    socket.on('sendchange', (change) => {
+    socket.on('sendchange', (data) => {
 
         /*var msgArr = msg.split(' '),
         msgCurrentBuffer = msg.split(' ');
@@ -45,7 +45,7 @@ io.on('connection', (socket) => {
 
         //io.emit('setmsg', msg);
         socket.broadcast.emit('setchange', {
-            change,
+            data.change,
             _users
         });
     });
