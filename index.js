@@ -14,7 +14,7 @@ io.on('connection', (socket) => {
 
     // Синхронизация
     if (!!message) {
-        socket.broadcast.emit('setmsg', message);
+        socket.emit('setmsg', message);
     }
 
     //console.log('Client connected');
