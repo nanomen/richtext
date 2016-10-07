@@ -63,9 +63,9 @@
     console.log('disconnect');
   });
 
-  socket.on('setInitData', function(_initText) {
-    console.trace('setchange', _initText);
-    editor.updateContents(_initText);
+  socket.on('setInitData', function(_initData) {
+    console.trace('setchange', _initData);
+    editor.updateContents(_initData);
     /*editor.updateContents({
       ops: [
         { insert: _initText }
@@ -90,7 +90,7 @@
         });
 
         socket.emit('setInitText', {
-          initText: editor.getContents()
+          initData: editor.getContents()
         });
 
         change = new Delta();
