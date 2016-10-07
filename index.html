@@ -37,6 +37,9 @@
 <script>
   var socket = io('https://fast-castle-17277.herokuapp.com/');
   var Delta = Quill.import('delta');
+  var Toolbar = Quill.import('modules/toolbar');
+
+  Quill.register('modules/toolbar', Toolbar);
   var editor = new Quill('#inputTextarea', {
     modules: {
       toolbar: '#toolbar'
