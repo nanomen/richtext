@@ -43,9 +43,11 @@ io.on('connection', (socket) => {
 
         msgCurrent = msgCurrentBuffer;*/
 
+        var change = data.change;
+
         //io.emit('setmsg', msg);
         socket.broadcast.emit('setchange', {
-            data.change,
+            change,
             _users
         });
     });
