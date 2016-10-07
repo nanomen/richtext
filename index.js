@@ -7,30 +7,38 @@ app.get('/', (req, res) => res.sendFile(__dirname + '/index.html') );
 
 var msgCurrent = null;
 
+var message = null;
+
 // Пдключились
 io.on('connection', (socket) => {
 
-  console.log('Client connected');
+    // Синхронизация
+    if (!!message) {
+        socket.broadcast.emit('setmsg', message);
+    }
 
-  socket.on('disconnect', () => console.log('Client disconnected'));
+    //console.log('Client connected');
 
-  socket.on('sendmsg', (msg) => {
+    //socket.on('disconnect', () => console.log('Client disconnected'));
 
-    /*var msgArr = msg.split(' '),
+    socket.on('sendmsg', (msg) => {
+
+        /*var msgArr = msg.split(' '),
         msgCurrentBuffer = msg.split(' ');
 
-    if (msgCurrent) {
+        if (msgCurrent) {
         msgCurrentBuffer = extendify(msgCurrent, msgArr);
 
         msg = msgCurrentBuffer.join(' ');
-    }
+        }
 
-    msgCurrent = msgCurrentBuffer;*/
+        msgCurrent = msgCurrentBuffer;*/
 
-    io.emit('setmsg', msg);
-    //socket.broadcast.emit('setmsg', msg);
+        //io.emit('setmsg', msg);
+        socket.broadcast.emit('setmsg', msg);
+        message = msg;
 
-  });
+    });
 
 });
 
