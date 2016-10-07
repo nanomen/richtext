@@ -38,21 +38,19 @@
 
   socket.on('connect', function(){
     console.log('connect');
+
+    socket.emit('getInitData');
   });
 
   socket.on('disconnect', function(){
     console.log('disconnect');
   });
 
-  socket.on('initData', function(initData) {
-    editor.updateContents({
-      ops: [
-        { insert: initData },
-      ]
-    });
+  socket.on('setInitData', function(initData) {
+    editor.setText(initData.text);
   });
 
-  socket.on('setmsg', function (data) {
+  socket.on('setchange', function (data) {
     editor.updateContents(data.msg);
   });
 
@@ -64,9 +62,11 @@
         if (change.length() > 0) {
         //console.log('Saving changes', JSON.stringify(change));
 
-        socket.emit('sendmsg', {
-          msg: change
+        socket.emit('sendchange', {
+          change: change
         });
+
+        socket.emit('setInitText', editor.getText(0, editor.getLength()));
 
         change = new Delta();
       }

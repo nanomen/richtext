@@ -5,20 +5,23 @@ var extendify = require('extendify');
 
 app.get('/', (req, res) => res.sendFile(__dirname + '/index.html') );
 
-//var msgCurrent = null;
-//
-var initData = 'начинай редактировать';
+var _initText = '';
 
 // Пдключились
 io.on('connection', (socket) => {
 
     //console.log('Client connected');
-    socket.emit('initData', initData);
+
+    socket.emit('setInitData', _initText);
+
+    /*socket.on('getInitData', () => {
+
+    });*/
 
 
     //socket.on('disconnect', () => console.log('Client disconnected'));
 
-    socket.on('sendmsg', (msg) => {
+    socket.on('sendchange', (change) => {
 
         /*var msgArr = msg.split(' '),
         msgCurrentBuffer = msg.split(' ');
@@ -32,8 +35,11 @@ io.on('connection', (socket) => {
         msgCurrent = msgCurrentBuffer;*/
 
         //io.emit('setmsg', msg);
-        socket.broadcast.emit('setmsg', msg);
+        socket.broadcast.emit('setchange', change);
+    });
 
+    socket.on('setInitText', (initText) => {
+        _initText = initText;
     });
 
 });
