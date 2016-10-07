@@ -98,7 +98,7 @@ $(function () {
     setCaretPosition(pos);
 
 
-    $.each(data.users, function(index, user){
+    $.each(data._users, function(index, user){
 
         $("#userCaret_" + index).css('top', user.caretPos.top + 'px');
         $("#userCaret_" + index).css('left', user.caretPos.left + 'px');
