@@ -9,7 +9,9 @@ var msgCurrent = null;
 
 // Пдключились
 io.on('connection', (socket) => {
+
   console.log('Client connected');
+
   socket.on('disconnect', () => console.log('Client disconnected'));
 
   socket.on('sendmsg', (msg) => {
@@ -25,7 +27,8 @@ io.on('connection', (socket) => {
 
     msgCurrent = msgCurrentBuffer;*/
 
-    io.emit('setmsg', msg);
+    //io.emit('setmsg', msg);
+    socket.broadcast.emit('setmsg', msg);
 
   });
 
