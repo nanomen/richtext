@@ -50,7 +50,9 @@
 
   editor.on('text-change', function(delta, oldDelta, source) {
 
-    change = change.compose(delta);
+    if (source === 'user') {
+      change = change.compose(delta);
+    }
 
     /*if (source === 'api') {
       console.log("An API call triggered this change.");
