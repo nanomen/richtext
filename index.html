@@ -35,7 +35,7 @@
 
     change = change.compose(delta);
 
-    if (source === 'api') {
+    /*if (source === 'api') {
       console.log("An API call triggered this change.");
     } else if (source === 'user') {
 
@@ -47,7 +47,7 @@
           change = new Delta();
         //}, 2000);
       }
-    }
+    }*/
 
   });
 
@@ -71,9 +71,9 @@
   });
 
   // Save periodically
- /* setInterval(function() {
+  setInterval(function() {
     if (change.length() > 0) {
-      console.log('Saving changes', JSON.stringify(change));
+      //console.log('Saving changes', JSON.stringify(change));
 
       socket.emit('sendmsg', {
         msg: change
@@ -81,7 +81,7 @@
 
       change = new Delta();
     }
-  }, 5*1000);*/
+  }, 5*1000);
 
 </script>
 </body>

@@ -5,7 +5,7 @@ var extendify = require('extendify');
 
 app.get('/', (req, res) => res.sendFile(__dirname + '/index.html') );
 
-var msgCurrent = null;
+//var msgCurrent = null;
 
 // Пдключились
 io.on('connection', (socket) => {
