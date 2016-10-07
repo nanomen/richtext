@@ -44,6 +44,14 @@
     console.log('disconnect');
   });
 
+  socket.on('initData', function(initData) {
+    editor.updateContents({
+      ops: [
+        { insert: initData },
+      ]
+    });
+  });
+
   socket.on('setmsg', function (data) {
     editor.updateContents(data.msg);
   });

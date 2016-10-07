@@ -6,11 +6,15 @@ var extendify = require('extendify');
 app.get('/', (req, res) => res.sendFile(__dirname + '/index.html') );
 
 //var msgCurrent = null;
+//
+var initData = 'начинай редактировать';
 
 // Пдключились
 io.on('connection', (socket) => {
 
     //console.log('Client connected');
+    socket.emit('initData', initData);
+
 
     //socket.on('disconnect', () => console.log('Client disconnected'));
 
