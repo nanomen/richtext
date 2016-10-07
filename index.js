@@ -7,15 +7,8 @@ app.get('/', (req, res) => res.sendFile(__dirname + '/index.html') );
 
 var msgCurrent = null;
 
-var message = null;
-
 // Пдключились
 io.on('connection', (socket) => {
-
-    // Синхронизация
-    if (!!message) {
-        socket.emit('setmsg', message);
-    }
 
     //console.log('Client connected');
 
@@ -36,7 +29,6 @@ io.on('connection', (socket) => {
 
         //io.emit('setmsg', msg);
         socket.broadcast.emit('setmsg', msg);
-        message = msg;
 
     });
 
