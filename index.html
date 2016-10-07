@@ -11,7 +11,7 @@
     <link href="https://cdn.quilljs.com/1.0.6/quill.bubble.css" rel="stylesheet">
 </head>
 <body>
-  <div style="width: 500px; height: 500px;">
+  <div id="app" style="width: 500px; height: 500px;">
     <!-- <textarea id="textarea" style="width: 500px; height: 500px;"></textarea> -->
     <div id="toolbar">
       <!-- Add font size dropdown -->
@@ -222,7 +222,7 @@ $(function () {
 
             $el.attr('id', 'userCaret_' + index);
 
-            .append($el);
+            $('#app').append($el);
 
         });
 
