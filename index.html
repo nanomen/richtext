@@ -66,7 +66,7 @@
           change: change
         });
 
-        socket.emit('setInitText', editor.getText(0, editor.getLength()));
+        socket.emit('setInitText', editor.getText());
 
         change = new Delta();
       }
