@@ -76,7 +76,7 @@ $(function () {
 
   socket.on('setInitData', function(data) {
 
-    console.trace('setchange', data._initData);
+    console.trace('setchange', data);
     editor.updateContents(data._initData);
     /*editor.updateContents({
       ops: [
