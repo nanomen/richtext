@@ -20,9 +20,7 @@
     <div id="inputTextarea" style="width: 500px; height: 500px;border: 1px solid red;padding: 10px;"></div>
   </div>
 <script>
-  var socket = io('https://fast-castle-17277.herokuapp.com/'),
-      textareaEl = document.getElementById('textarea'),
-      inputTextareaEl = document.getElementById('inputTextarea');
+  var socket = io('https://fast-castle-17277.herokuapp.com/');
 
   var Delta = Quill.import('delta');
   var editor = new Quill('#inputTextarea');
@@ -30,7 +28,26 @@
 
   console.log(editor);
 
+
   // quill.getContents();
+
+
+  /*quill.on('text-change', function(delta) {
+    change = change.compose(delta);
+  });*/
+
+  socket.on('connect', function(){
+    console.log('connect');
+  });
+
+  socket.on('disconnect', function(){
+    console.log('disconnect');
+  });
+
+  socket.on('setmsg', function (data) {
+    editor.updateContents(data.msg);
+  });
+
   editor.on('text-change', function(delta, oldDelta, source) {
 
     change = change.compose(delta);
@@ -49,27 +66,6 @@
       }
     }*/
 
-  });
-
-  /*quill.on('text-change', function(delta) {
-    change = change.compose(delta);
-  });*/
-
-  socket.on('connect', function(){
-    console.log('connect');
-  });
-
-  socket.on('disconnect', function(){
-    console.log('disconnect');
-  });
-
-  socket.on('setmsg', function (data) {
-
-    console.log(data);
-
-    editor.updateContents(data.msg);
-
-    change = change.compose(data.msg);
   });
 
   // Save periodically
