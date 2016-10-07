@@ -14,7 +14,7 @@ io.on('connection', (socket) => {
 
   socket.on('sendmsg', (msg) => {
 
-    var msgArr = msg.split(' '),
+    /*var msgArr = msg.split(' '),
         msgCurrentBuffer = msg.split(' ');
 
     if (msgCurrent) {
@@ -23,7 +23,7 @@ io.on('connection', (socket) => {
         msg = msgCurrentBuffer.join(' ');
     }
 
-    msgCurrent = msgCurrentBuffer;
+    msgCurrent = msgCurrentBuffer;*/
 
     io.emit('setmsg', msg);
 

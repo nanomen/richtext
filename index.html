@@ -24,35 +24,30 @@
       textareaEl = document.getElementById('textarea'),
       inputTextareaEl = document.getElementById('inputTextarea');
 
-  var options = {
-    //debug: 'info',
-    /*modules: {
-      toolbar: '#toolbar'
-    },*/
-    placeholder: 'Compose an epic...'//,
-    //readOnly: true,
-    //theme: 'snow'
-  };
-
-  var editor = new Quill('#inputTextarea', options);
+  var Delta = Quill.import('delta');
+  var editor = new Quill('#inputTextarea');
+  var change = new Delta();
 
   console.log(editor);
 
   // quill.getContents();
   editor.on('text-change', function(delta, oldDelta, source) {
 
-    console.log(editor.getContents().ops[0].insert);
+    change = change.compose(delta);
 
-    if (source === 'api') {
+    /*if (source === 'api') {
       console.log("An API call triggered this change.");
     } else if (source === 'user') {
       socket.emit('sendmsg', {
         msg: editor.getContents().ops[0].insert
       });
-    }
-
+    }*/
 
   });
+
+  /*quill.on('text-change', function(delta) {
+    change = change.compose(delta);
+  });*/
 
   socket.on('connect', function(){
     console.log('connect');
@@ -65,23 +60,22 @@
   socket.on('setmsg', function (data) {
 
     console.log(data);
-    /*$(inputTextareaEl).text(data.msg);
-    $(textareaEl).val(data.msg);*/
-    editor.updateContents({
-      ops: [
-        { retain: 6 },
-        { insert: data.msg }
-      ]
-    });
+
+    editor.updateContents(data.msg);
   });
 
-  /*$(textareaEl).on('keyup', function(e){
-    socket.emit('sendmsg', {
-      msg: $(this).val()
-    });
-  });*/
+  // Save periodically
+  setInterval(function() {
+    if (change.length() > 0) {
+      console.log('Saving changes', JSON.stringify(change));
 
+      socket.emit('sendmsg', {
+        msg: change
+      });
 
+      change = new Delta();
+    }
+  }, 5*1000);
 
 </script>
 </body>
