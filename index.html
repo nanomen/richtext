@@ -2,7 +2,8 @@
 <head>
     <title>Test socket.io</title>
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script> -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <!-- Main Quill library -->
     <script src="https://cdn.quilljs.com/1.0.6/quill.js" type="text/javascript"></script>
 
@@ -31,6 +32,8 @@
     <div id="inputTextarea"></div>
   </div>
 <script>
+$(function () {
+
   var socket = io('https://fast-castle-17277.herokuapp.com/');
   var Delta = Quill.import('delta');
   var Toolbar = Quill.import('modules/toolbar');
@@ -45,6 +48,8 @@
   });
   var change = new Delta();
 
+  var userId = 'user_' + (Math.random()*1000).toFixed(3);
+
   //console.log(editor);
 
 
@@ -57,21 +62,26 @@
 
   socket.on('connect', function(){
     console.log('connect');
+
+    socket.emit('setUserId', {
+      userId: userId
+    });
   });
 
   socket.on('disconnect', function(){
     console.log('disconnect');
   });
 
-  socket.on('setInitData', function(_initData) {
+  socket.on('setInitData', function(data) {
 
-    console.trace('setchange', _initData);
-    editor.updateContents(_initData);
+    console.trace('setchange', data._initData);
+    editor.updateContents(data._initData);
     /*editor.updateContents({
       ops: [
         { insert: _initText }
       ]
     });*/
+    createCaret(data._users);
   });
 
   socket.on('setchange', function (data) {
@@ -83,6 +93,15 @@
     editor.updateContents(data.change);
 
     setCaretPosition(pos);
+
+    $.each(data.users, function(index, user){
+
+        $("#userCaret_" + index).css('top', user.caretPos.top + 'px');
+        $("#userCaret_" + index).css('left', user.caretPos.left + 'px');
+
+    });
+
+
   });
 
   editor.on('text-change', function(delta, oldDelta, source) {
@@ -167,7 +186,58 @@
 
   }
 
+    var $editable = $('#inputTextarea');
 
+    /*function resetOffset($textField) {
+        var offset = $textField.caret('offset');
+        var position = $textField.caret('position');
+        console.log(offset, position);
+        return offset;
+    }*/
+
+     $editable.on('focus keyup mouseup', function(){
+      //setUserCaret(resetOffset($editable));
+      console.log(editor);
+      var sel = editor.root.ownerDocument.getSelection();
+      if (sel.rangeCount > 0) {
+        var range = sel.getRangeAt(0);
+        var rects = range.getClientRects();
+        if (rects.length > 0) {
+          socket.emit('setCaretPos', {
+              userId: userId,
+              caretPos: {
+                top: rects[0].top,
+                left: rects[0].left
+              }
+            });
+        }
+      }
+
+    });
+
+    function createCaret(users) {
+
+        $.each(users, function(index, user){
+
+            var $el = $('<div style="position: fixed; width: 1px;height: 15px;background: red;"></div>');
+
+            $el.attr('id', 'userCaret_' + index);
+
+            .append($el);
+
+        });
+
+    }
+
+    /*function setUserCaret(offset) {
+        $('#userCaret').css({
+            left: offset.left + 'px',
+            top: offset.top + 'px',
+            height: offset.height + 'px'
+        });
+    }*/
+
+});
 </script>
 </body>
 </html>

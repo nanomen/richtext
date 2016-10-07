@@ -11,12 +11,17 @@ var _initData = {
       ]
     };
 
+var _users = {};
+
 // Пдключились
 io.on('connection', (socket) => {
 
     //console.log('Client connected');
 
-    socket.emit('setInitData', _initData);
+    socket.emit('setInitData', {
+        _initData,
+        _users
+    });
 
     /*socket.on('getInitData', () => {
 
@@ -39,7 +44,21 @@ io.on('connection', (socket) => {
         msgCurrent = msgCurrentBuffer;*/
 
         //io.emit('setmsg', msg);
-        socket.broadcast.emit('setchange', change);
+        socket.broadcast.emit('setchange', {
+            change,
+            _users
+        });
+    });
+
+    socket.on('setUserId', (userData) => {
+        _users[userData.userId] = {
+            id: userData.userId,
+            caretPos: userData.caretPos
+        };
+    });
+
+    socket.on('setCaretPos', (userData) => {
+        _users[userData.userId].caretPos = userData.caretPos;
     });
 
     socket.on('setInitText', (data) => {
