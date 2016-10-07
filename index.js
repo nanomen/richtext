@@ -27,8 +27,8 @@ io.on('connection', (socket) => {
 
     msgCurrent = msgCurrentBuffer;*/
 
-    //io.emit('setmsg', msg);
-    socket.broadcast.emit('setmsg', msg);
+    io.emit('setmsg', msg);
+    //socket.broadcast.emit('setmsg', msg);
 
   });
 
