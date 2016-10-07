@@ -106,8 +106,8 @@ $(function () {
 
             if (!!caretPos && index !== userId) {
 
-                $("#userCaret_user_" + index).css('top', user.caretPos.top + 'px');
-                $("#userCaret_user_" + index).css('left', user.caretPos.left + 'px');
+                $("#userCaret_" + index).css('top', user.caretPos.top + 'px');
+                $("#userCaret_" + index).css('left', user.caretPos.left + 'px');
 
             }
 
@@ -233,11 +233,17 @@ $(function () {
 
         $.each(users, function(index, user){
 
-            var $el = $('<div style="position: fixed; width: 1px;height: 15px;background: red;"></div>');
+            console.log(user);
 
-            $el.attr('id', 'userCaret_user_' + index);
+            if (index !== userId) {
 
-            $('#app').append($el);
+                var $el = $('<div style="position: fixed; width: 1px;height: 15px;background: red;"></div>');
+
+                $el.attr('id', 'userCaret_' + index);
+
+                $('#app').append($el);
+
+            }
 
         });
 
