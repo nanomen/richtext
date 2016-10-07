@@ -92,11 +92,11 @@ $(function () {
 
     pos = doGetCaretPosition(root);
 
+    console.log(data);
     editor.updateContents(data.change);
 
     setCaretPosition(pos);
 
-    console.log(data);
 
     $.each(data.users, function(index, user){
 
