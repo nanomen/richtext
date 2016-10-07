@@ -53,7 +53,7 @@
   });
 
   socket.on('setchange', function (data) {
-    editor.updateContents(data.msg);
+    editor.updateContents(data.change);
   });
 
   editor.on('text-change', function(delta, oldDelta, source) {
