@@ -57,6 +57,10 @@ io.on('connection', (socket) => {
         };
     });
 
+    socket.on('removeUserId', (userData) => {
+        _users[userData.userId] = null;
+    });
+
     socket.on('setCaretPos', (userData) => {
         _users[userData.userId].caretPos = userData.caretPos;
     });
