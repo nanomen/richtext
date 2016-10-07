@@ -45,7 +45,7 @@
 
   socket.on('setInitData', function(_initText) {
     console.trace('setchange', _initText);
-    quill.updateContents({
+    editor.updateContents({
       ops: [
       { insert: _initText }
       ]
