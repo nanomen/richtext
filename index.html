@@ -68,6 +68,8 @@
     console.log(data);
 
     editor.updateContents(data.msg);
+
+    change = change.compose(data.msg);
   });
 
   // Save periodically
