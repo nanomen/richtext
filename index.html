@@ -40,12 +40,12 @@
     } else if (source === 'user') {
 
       if (change.length() > 0) {
-        setTimeout(function(){
+        //setTimeout(function(){
           socket.emit('sendmsg', {
             msg: change
           });
           change = new Delta();
-        }, 2000);
+        //}, 2000);
       }
     }
 
